@@ -49,3 +49,28 @@ Screenshot-style output:
 ```
 
 ## Severity Types
+
+```go
+digreyt.SeverityError
+digreyt.SeverityWarning
+digreyt.SeverityInfo
+digreyt.SeveritySuccess
+```
+
+Warnings can look different from errors:
+
+```text
+! ShadowedName: variable shadows previous declaration
+──> main.candy 8:5
+
+7 │ let name = "old"
+8 │ let name = "new"
+  │     ^^^^ rename this binding
+
+```
+
+Info diagnostics can use their own symbol and color:
+
+```text
+i TypeInfo: inferred type is string
+──> main.candy 3:12
