@@ -24,3 +24,28 @@ arena.Add(digreyt.Error{
 	Arrow:         "expected expression",
 	Severity:      digreyt.SeverityError,
 	IsShowSnippet: true,
+	Pos: digreyt.Position{
+		FileName: "main.candy",
+		Line:     2,
+		Column:   7,
+	},
+	Start: 6,
+	End:   11,
+})
+
+_ = arena.Render(os.Stderr)
+```
+
+Screenshot-style output:
+
+```text
+× ParseError: unexpected token
+──> main.candy 2:7
+
+1 │ fn main() {
+2 │ print()
+  │       ^^^^^ expected expression
+
+```
+
+## Severity Types
