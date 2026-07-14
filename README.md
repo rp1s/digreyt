@@ -352,3 +352,28 @@ DeepL API Pro with token:
 
 ```go
 provider := translate.NewDeepLProTranslator(os.Getenv("DEEPL_AUTH_KEY"))
+translate.SetAutoTranslator(provider)
+```
+
+DeepL request shape:
+
+```text
+POST https://api-free.deepl.com/v2/translate
+Authorization: DeepL-Auth-Key <token>
+Content-Type: application/json
+
+{"text":["unexpected token"],"source_lang":"EN","target_lang":"RU"}
+```
+
+LibreTranslate managed or self-hosted:
+
+```go
+provider := translate.NewLibreTranslateTranslator(
+	"http://localhost:5000/translate",
+	"", // optional api_key, depends on the instance
+)
+translate.SetAutoTranslator(provider)
+```
+
+LibreTranslate request shape:
+
