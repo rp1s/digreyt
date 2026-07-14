@@ -251,3 +251,28 @@ err = err.Localize()
 ## Automatic Translations
 
 The `translate` package can translate missing text automatically. The default
+provider is MyMemory, and you can switch to Google, DeepL, LibreTranslate, or a
+fallback chain.
+
+Built-in providers:
+
+- `translate.MyMemoryTranslator`: free unauthenticated MyMemory API.
+- `translate.GoogleTranslator`: Google Cloud Translation Basic v2.
+- `translate.DeepLTranslator`: DeepL API Free by default.
+- `translate.LibreTranslateTranslator`: LibreTranslate managed or self-hosted.
+- `translate.TranslatorChain`: tries several providers in order.
+
+Default MyMemory behavior:
+
+- API endpoint: `https://api.mymemory.translated.net/get`
+- Request shape: `q=<text>&langpair=<source>|<target>`
+- `key` and `de` email are optional.
+- MyMemory documents a 500-byte limit for `q`.
+
+```go
+translate.SetLanguage("ru")
+
+err := digreyt.Error{
+	CodeName: "ParseError",
+	MessageTranslations: translate.Translations{
+		{Language: "eng", Text: "unexpected token"},
