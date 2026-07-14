@@ -99,3 +99,29 @@ Wrapped errors work because `AddError` uses `errors.As`.
 type ParserError struct {
 	Message string
 	Span    digreyt.Span
+}
+
+func (e ParserError) Error() string {
+	return e.Message
+}
+
+func (e ParserError) AsDiagnostic() digreyt.Error {
+	return digreyt.Error{
+		CodeName:      "ParserError",
+		Message:       e.Message,
+		Severity:      digreyt.SeverityError,
+		IsShowSnippet: true,
+		Pos:           e.Span.Pos,
+		Start:         e.Span.Start,
+		End:           e.Span.End,
+	}
+}
+
+arena.AddError(fmt.Errorf("parse failed: %w", ParserError{Message: "bad call"}))
+```
+
+Plain errors are still accepted:
+
+```go
+arena.AddError(errors.New("plain failure"))
+```
