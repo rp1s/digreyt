@@ -327,3 +327,28 @@ translate.SetAutoTranslator(provider)
 
 Google with OAuth bearer token instead of API key:
 
+```go
+provider := &translate.GoogleTranslator{
+	BearerToken: os.Getenv("GOOGLE_TRANSLATE_TOKEN"),
+	Format:      "text",
+}
+translate.SetAutoTranslator(provider)
+```
+
+Google request shape:
+
+```text
+POST https://translation.googleapis.com/language/translate/v2?q=...&source=en&target=ru&format=text&key=...
+```
+
+DeepL API Free with token:
+
+```go
+provider := translate.NewDeepLTranslator(os.Getenv("DEEPL_AUTH_KEY"))
+translate.SetAutoTranslator(provider)
+```
+
+DeepL API Pro with token:
+
+```go
+provider := translate.NewDeepLProTranslator(os.Getenv("DEEPL_AUTH_KEY"))
