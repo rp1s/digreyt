@@ -226,3 +226,28 @@ arena.Print(os.Stderr)
 
 ```go
 if err := arena.Render(os.Stderr); err != nil {
+	return err
+}
+```
+
+## Manual Translations
+
+Manual translations are still deterministic and do not touch the network.
+
+```go
+translate.SetLanguage("ru")
+
+err := digreyt.Error{
+	CodeName: "ParseError",
+	MessageTranslations: translate.Translations{
+		{Language: "eng", Text: "unexpected token"},
+		{Language: "ru", Text: "неожиданный токен"},
+	},
+}
+
+err = err.Localize()
+```
+
+## Automatic Translations
+
+The `translate` package can translate missing text automatically. The default
