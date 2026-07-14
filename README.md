@@ -276,3 +276,28 @@ err := digreyt.Error{
 	CodeName: "ParseError",
 	MessageTranslations: translate.Translations{
 		{Language: "eng", Text: "unexpected token"},
+	},
+	ArrowTranslations: translate.Translations{
+		{Language: "eng", Text: "expected expression"},
+	},
+}
+
+localized, translateErr := err.LocalizeAuto(context.Background())
+if translateErr != nil {
+	return translateErr
+}
+
+arena.Add(localized)
+_ = arena.Render(os.Stderr)
+```
+
+You can render and auto-localize the whole arena in one call:
+
+```go
+translate.SetLanguage("ru")
+_ = arena.RenderAuto(context.Background(), os.Stderr)
+```
+
+## Provider Settings
+
+MyMemory:
