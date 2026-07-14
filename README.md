@@ -377,3 +377,28 @@ translate.SetAutoTranslator(provider)
 
 LibreTranslate request shape:
 
+```text
+POST http://localhost:5000/translate
+Content-Type: application/json
+
+{"q":"unexpected token","source":"en","target":"ru","format":"text"}
+```
+
+Fallback chain:
+
+```go
+provider := translate.NewTranslatorChain(
+	translate.NewGoogleTranslator(os.Getenv("GOOGLE_TRANSLATE_KEY")),
+	translate.NewDeepLTranslator(os.Getenv("DEEPL_AUTH_KEY")),
+	translate.NewLibreTranslateTranslator(os.Getenv("LIBRE_TRANSLATE_URL"), os.Getenv("LIBRE_TRANSLATE_KEY")),
+	translate.NewMyMemoryTranslator(),
+)
+
+translate.SetAutoTranslator(provider)
+```
+
+Use a custom, local, LibreTranslate or mocked provider by implementing
+`AutoTranslator`:
+
+```go
+type LocalTranslator struct{}
