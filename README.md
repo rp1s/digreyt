@@ -150,3 +150,28 @@ theme.SeverityViews[digreyt.SeverityWarning] = digreyt.SeverityView{
 	ArrowStyles:  []colorista.Style{colorista.BrightMagenta},
 	BulletStyles: []colorista.Style{colorista.BrightMagenta},
 }
+
+arena.Renderer = digreyt.NewColorRenderer(theme)
+```
+
+Screenshot-style output:
+
+```text
+warn ShadowedName: variable shadows previous declaration
+──> main.candy 8:5
+
+7 │ let name = "old"
+8 │ let name = "new"
+  │     ^^^^ rename this binding
+
+```
+
+You can customize:
+
+- `ContextLines`: how many previous source lines are shown.
+- `LocationArrow`: marker before file location.
+- `ModuleLabel`: marker for module-level diagnostics.
+- `DescriptionBullet`: bullet before description lines.
+- `MutedStyles`: style for line numbers and separators.
+- `LocationStyles`: style for file, line and column.
+- `SeverityViews`: symbol, label, caret, arrow, code and description styles for
