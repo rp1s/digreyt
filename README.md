@@ -301,3 +301,29 @@ _ = arena.RenderAuto(context.Background(), os.Stderr)
 ## Provider Settings
 
 MyMemory:
+
+```go
+provider := translate.NewMyMemoryTranslator()
+provider.Email = "dev@example.com" // optional MyMemory `de` parameter
+provider.Key = "private-key"       // optional MyMemory key
+
+translate.SetAutoTranslator(provider)
+```
+
+MyMemory can also use only translation-memory matches:
+
+```go
+provider := translate.NewMyMemoryTranslator()
+provider.MachineTranslation = false
+translate.SetAutoTranslator(provider)
+```
+
+Google Cloud Translation Basic v2 with API key:
+
+```go
+provider := translate.NewGoogleTranslator(os.Getenv("GOOGLE_TRANSLATE_KEY"))
+translate.SetAutoTranslator(provider)
+```
+
+Google with OAuth bearer token instead of API key:
+
