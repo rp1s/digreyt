@@ -125,3 +125,28 @@ Plain errors are still accepted:
 ```go
 arena.AddError(errors.New("plain failure"))
 ```
+
+They become:
+
+```text
+× Error: plain failure
+Module:
+```
+
+## Custom Theme
+
+Use `RenderTheme` when the layout is fine, but the visual language should
+change.
+
+```go
+theme := digreyt.DefaultRenderTheme()
+theme.DescriptionBullet = "- "
+theme.SeverityViews[digreyt.SeverityWarning] = digreyt.SeverityView{
+	Symbol:       "warn",
+	Label:        "warning",
+	SymbolStyles: []colorista.Style{colorista.Bold, colorista.BrightMagenta},
+	CodeStyles:   []colorista.Style{colorista.Bold, colorista.BrightMagenta},
+	CaretStyles:  []colorista.Style{colorista.Bold, colorista.BrightMagenta},
+	ArrowStyles:  []colorista.Style{colorista.BrightMagenta},
+	BulletStyles: []colorista.Style{colorista.BrightMagenta},
+}
