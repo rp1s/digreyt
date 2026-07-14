@@ -200,3 +200,29 @@ renderer := digreyt.RendererFunc(func(w io.Writer, source string, err digreyt.Er
 _ = arena.PrintWith(os.Stdout, renderer)
 ```
 
+Screenshot-style output:
+
+```json
+{"severity":"warning","code":"ShadowedName","message":"variable shadows previous declaration"}
+```
+
+## Arena Helpers
+
+```go
+arena.HasDiagnostics()              // any diagnostic
+arena.HasErrors()                   // compatibility alias for any diagnostic
+arena.HasSeverity(digreyt.SeverityWarning)
+arena.HasFatalErrors()              // true only for SeverityError
+arena.Clear()
+```
+
+`Print` keeps the old fire-and-forget API:
+
+```go
+arena.Print(os.Stderr)
+```
+
+`Render` returns writer/render errors:
+
+```go
+if err := arena.Render(os.Stderr); err != nil {
