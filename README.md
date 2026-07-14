@@ -175,3 +175,28 @@ You can customize:
 - `MutedStyles`: style for line numbers and separators.
 - `LocationStyles`: style for file, line and column.
 - `SeverityViews`: symbol, label, caret, arrow, code and description styles for
+  each severity.
+
+All style fields use `colorista.Style`, for example `colorista.Bold`,
+`colorista.BrightRed`, `colorista.Rgb(...)`, `colorista.ANSI256(...)`.
+
+## Completely Custom Renderer
+
+Use `RendererFunc` when you want a totally different view: compact logs, JSON,
+LSP payloads, snapshots for tests, or a UI protocol.
+
+```go
+renderer := digreyt.RendererFunc(func(w io.Writer, source string, err digreyt.Error) error {
+	_, writeErr := fmt.Fprintf(
+		w,
+		`{"severity":%q,"code":%q,"message":%q}`+"\n",
+		err.Severity.String(),
+		err.CodeName,
+		err.Message,
+	)
+	return writeErr
+})
+
+_ = arena.PrintWith(os.Stdout, renderer)
+```
+
