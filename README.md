@@ -402,3 +402,28 @@ Use a custom, local, LibreTranslate or mocked provider by implementing
 
 ```go
 type LocalTranslator struct{}
+
+func (LocalTranslator) Translate(ctx context.Context, from, to, text string) (string, error) {
+	return "[" + to + "] " + text, nil
+}
+
+translate.SetAutoTranslator(LocalTranslator{})
+```
+
+## Notes
+
+Automatic translation is intentionally explicit. `Resolve` and `Localize` never
+call the network. Use `ResolveAuto`, `LocalizeAuto` or `RenderAuto` only when
+network translation is acceptable for your CLI or tool.
+
+MyMemory API docs:
+https://mymemory.translated.net/doc/spec.php
+
+Google Translation Basic v2 docs:
+https://docs.cloud.google.com/translate/docs/reference/rest/v2/translate
+
+DeepL translate API docs:
+https://developers.deepl.com/api-reference/translate
+
+LibreTranslate API docs:
+https://docs.libretranslate.com/guides/api_usage/
